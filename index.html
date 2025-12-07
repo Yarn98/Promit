@@ -3873,13 +3873,23 @@
                     prompt += item.value;
                     if (i < list.length - 1) {
                         if (item.linkNext) {
-                            prompt += " ";
+                            const nextItem = list[i + 1];
+                            prompt += this.shouldSkipLinkSpace(nextItem) ? "" : " ";
                         } else {
                             prompt += ", ";
                         }
                     }
                 });
                 return prompt;
+            }
+            shouldSkipLinkSpace(nextItem) {
+                if (!nextItem || !nextItem.value) return false;
+                const trimmed = nextItem.value.trim();
+                if (!trimmed) return false;
+                const pairs = { '(': ')', '[': ']', '{': '}' };
+                const first = trimmed[0];
+                const last = trimmed[trimmed.length - 1];
+                return pairs[first] && last === pairs[first];
             }
             generatePrompt() {
                 return this.buildPromptFromItems(this.items);
