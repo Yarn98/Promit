@@ -2050,16 +2050,18 @@ const Palette = [
                 Object.keys(decks).forEach(type => {
                     const deck = decks[type];
                     if (!deck) return;
-                    if (!Array.isArray(optionsData[type])) optionsData[type] = [];
-                    const signatureValues = this.parseDeckSignature(deck.signature) || [];
-                    const remainingValues = Array.isArray(deck.remaining) ? deck.remaining : [];
-                    const combined = [...signatureValues, ...remainingValues];
-                    combined.forEach(val => {
-                        if (!optionsData[type].includes(val)) {
-                            optionsData[type].push(val);
+                    if (!Array.isArray(optionsData[type]) || !optionsData[type].length) {
+                        const signatureValues = this.parseDeckSignature(deck.signature) || [];
+                        const remainingValues = Array.isArray(deck.remaining) ? deck.remaining : [];
+                        const combined = [...signatureValues, ...remainingValues];
+                        if (combined.length) {
+                            const unique = [];
+                            combined.forEach(val => {
+                                if (!unique.includes(val)) unique.push(val);
+                            });
+                            optionsData[type] = this.sortOptionsList(unique);
                         }
-                    });
-                    optionsData[type] = this.sortOptionsList(optionsData[type]);
+                    }
                 });
             }
             parseDeckSignature(signature) {
@@ -2117,6 +2119,10 @@ const Palette = [
                 if (!Array.isArray(state.customTypes)) state.customTypes = [];
                 if (!Array.isArray(state.capsuleOrder)) state.capsuleOrder = [];
                 if (!this.isPlainObject(state.optionsData)) state.optionsData = {};
+                if (!Array.isArray(state.items)) state.items = [];
+                if (!Array.isArray(state.favorites)) state.favorites = [];
+                if (!Array.isArray(state.rollHistory)) state.rollHistory = [];
+                if (!this.isPlainObject(state.capLabels)) state.capLabels = {};
                 const baseKeys = new Set(this.getBaseCapsuleKeys());
                 const knownKeys = new Set(baseKeys);
                 state.customTypes.forEach(def => {
@@ -2126,30 +2132,107 @@ const Palette = [
                     def.key = trimmed;
                     knownKeys.add(trimmed);
                 });
-                const pending = new Set();
+                const orderSet = new Set(state.capsuleOrder);
+                Object.keys(state.optionsData || {}).forEach(key => {
+                    const trimmed = (key || '').trim();
+                    if (!trimmed || knownKeys.has(trimmed)) return;
+                    const label = this.deriveLabelFromKey(trimmed, state);
+                    const capColor = this.generatePastelColor();
+                    state.customTypes.push({ key: trimmed, label, capColor });
+                    knownKeys.add(trimmed);
+                    if (!orderSet.has(trimmed)) {
+                        state.capsuleOrder.push(trimmed);
+                        orderSet.add(trimmed);
+                    }
+                });
+                const pruneItems = (list, type) => {
+                    if (!Array.isArray(list)) return { changed: false, list: [] };
+                    const filtered = list.filter(item => item && item.type !== type);
+                    return { changed: filtered.length !== list.length, list: filtered };
+                };
+                const dropType = (type) => {
+                    let changed = false;
+                    const resItems = pruneItems(state.items, type);
+                    if (resItems.changed) {
+                        state.items = resItems.list;
+                        changed = true;
+                    }
+                    const nextFavs = [];
+                    state.favorites.forEach(fav => {
+                        const res = pruneItems(fav?.items || [], type);
+                        if (res.changed) {
+                            fav.items = res.list;
+                            changed = true;
+                        }
+                        if (!fav.items || fav.items.length === 0) {
+                            changed = true;
+                            return;
+                        }
+                        nextFavs.push(fav);
+                    });
+                    if (nextFavs.length !== state.favorites.length) {
+                        changed = true;
+                    }
+                    state.favorites = nextFavs;
+                    const nextHistory = [];
+                    state.rollHistory.forEach(entry => {
+                        const res = pruneItems(entry?.items || [], type);
+                        if (res.changed) {
+                            entry.items = res.list;
+                            changed = true;
+                        }
+                        if (!entry.items || entry.items.length === 0) {
+                            changed = true;
+                            return;
+                        }
+                        nextHistory.push(entry);
+                    });
+                    if (nextHistory.length !== state.rollHistory.length) {
+                        changed = true;
+                    }
+                    state.rollHistory = nextHistory;
+                    if (state.capLabels[type]) {
+                        delete state.capLabels[type];
+                        changed = true;
+                    }
+                    if (state.optionsData[type]) {
+                        delete state.optionsData[type];
+                        changed = true;
+                    }
+                    const beforeOrder = state.capsuleOrder.length;
+                    state.capsuleOrder = state.capsuleOrder.filter(k => k !== type);
+                    if (state.capsuleOrder.length !== beforeOrder) {
+                        changed = true;
+                    }
+                    state.customTypes = state.customTypes.filter(def => def.key !== type);
+                    return changed;
+                };
+                let mutated = false;
+                const referenced = new Set();
                 const collect = (key) => {
                     if (typeof key !== 'string') return;
                     const trimmed = key.trim();
-                    if (!trimmed || knownKeys.has(trimmed)) return;
-                    pending.add(trimmed);
+                    if (!trimmed) return;
+                    referenced.add(trimmed);
                 };
-                Object.keys(state.optionsData || {}).forEach(collect);
-                (state.items || []).forEach(item => collect(item?.type));
-                (state.favorites || []).forEach(fav => (fav?.items || []).forEach(item => collect(item?.type)));
-                Object.keys(state.capLabels || {}).forEach(collect);
-                (state.rollHistory || []).forEach(entry => (entry?.items || []).forEach(item => collect(item?.type)));
-                (state.capsuleOrder || []).forEach(collect);
-                let added = false;
-                pending.forEach(key => {
-                    const label = this.deriveLabelFromKey(key, state);
-                    const capColor = this.generatePastelColor();
-                    state.customTypes.push({ key, label, capColor });
-                    knownKeys.add(key);
-                    if (!state.optionsData[key]) state.optionsData[key] = [];
-                    if (!state.capsuleOrder.includes(key)) state.capsuleOrder.push(key);
-                    added = true;
+                state.items.forEach(item => collect(item?.type));
+                state.favorites.forEach(fav => (fav?.items || []).forEach(item => collect(item?.type)));
+                state.rollHistory.forEach(entry => (entry?.items || []).forEach(item => collect(item?.type)));
+                Object.keys(state.capLabels).forEach(collect);
+                state.capsuleOrder.forEach(collect);
+                referenced.forEach(type => {
+                    if (knownKeys.has(type)) return;
+                    if (dropType(type)) mutated = true;
                 });
-                return added;
+                const finalOrderSet = new Set(state.capsuleOrder);
+                knownKeys.forEach(key => {
+                    if (!finalOrderSet.has(key)) {
+                        state.capsuleOrder.push(key);
+                        finalOrderSet.add(key);
+                        mutated = true;
+                    }
+                });
+                return mutated;
             }
             repairMissingCapsules({ persist = true } = {}) {
                 if (!Array.isArray(this.customTypes)) this.customTypes = [];
@@ -2832,18 +2915,74 @@ const Palette = [
                 this.resetDeck(key);
                 delete this.capLabels[key];
                 this.capsuleOrder = this.capsuleOrder.filter(k => k !== key);
-                const beforeLength = this.items.length;
-                if (beforeLength) {
-                    this.items = this.items.filter(item => item.type !== key);
-                    if (this.items.length !== beforeLength) {
-                        this.pushHistory();
-                    }
+                const referencesChanged = this.purgeTypeReferences(key);
+                if (referencesChanged) {
+                    this.pushHistory();
                 }
                 this.capsulesDirty = true;
                 this.saveData();
                 this.render();
                 this.showToast(this.t('toastCapDeleted'));
                 return true;
+            }
+            purgeTypeReferences(type) {
+                let changed = false;
+                const prevItems = this.items.length;
+                this.items = this.items.filter(item => item.type !== type);
+                if (this.items.length !== prevItems) {
+                    changed = true;
+                }
+                let favoritesChanged = false;
+                const nextFavs = [];
+                this.favorites.forEach(fav => {
+                    if (!Array.isArray(fav.items)) {
+                        nextFavs.push(fav);
+                        return;
+                    }
+                    const filtered = fav.items.filter(item => item.type !== type);
+                    if (filtered.length !== fav.items.length) {
+                        fav.items = filtered;
+                        favoritesChanged = true;
+                        changed = true;
+                    }
+                    if (fav.items.length === 0) {
+                        favoritesChanged = true;
+                        changed = true;
+                        return;
+                    }
+                    nextFavs.push(fav);
+                });
+                if (favoritesChanged) {
+                    this.favorites = nextFavs;
+                    this.ensureFavoriteNames();
+                    if (this.activeFavoriteId && !this.favorites.some(f => f.id === this.activeFavoriteId)) {
+                        this.clearActiveFavoriteLabel();
+                    }
+                    this.latestFavoriteId = null;
+                    this.dockDirty = true;
+                }
+                const prevHistoryLen = this.rollHistory.length;
+                let rollHistoryMutated = false;
+                this.rollHistory = this.rollHistory.filter(entry => {
+                    if (!Array.isArray(entry.items)) return true;
+                    const filtered = entry.items.filter(item => item.type !== type);
+                    if (filtered.length !== entry.items.length) {
+                        entry.items = filtered;
+                        rollHistoryMutated = true;
+                    }
+                    return entry.items.length > 0;
+                });
+                if (rollHistoryMutated || this.rollHistory.length !== prevHistoryLen) {
+                    changed = true;
+                    this.dockDirty = true;
+                }
+                if (Array.isArray(this.history) && this.history.length) {
+                    this.history = this.history
+                        .map(snapshot => Array.isArray(snapshot) ? snapshot.filter(item => item.type !== type) : [])
+                        .filter(snapshot => snapshot.length > 0);
+                    this.historyIndex = Math.min(this.historyIndex, this.history.length - 1);
+                }
+                return changed;
             }
             openFavoriteEditDialog(favId, anchorEl) {
                 const idx = this.favorites.findIndex(f => f.id === favId);

@@ -3,10 +3,21 @@
   "version": "Promit 1.0",
   "items": [
     {
+      "id": "quality_1765185305204_78glr",
+      "type": "quality",
+      "label": "Quality",
+      "value": "RAW photo",
+      "isRandom": false,
+      "isCustom": false,
+      "linkNext": false,
+      "color": "hsl(26, 48%, 78%)",
+      "darkColor": "hsl(26, 23%, 38%)"
+    },
+    {
       "id": "hair_1765165308675_5moeq",
       "type": "hair",
       "label": "Hair",
-      "value": "Wavy hair",
+      "value": "Wolf cut",
       "isRandom": true,
       "isCustom": false,
       "linkNext": true,
@@ -17,12 +28,23 @@
       "id": "job_1765165152294_od35m",
       "type": "profession",
       "label": "Profession",
-      "value": "Chef",
+      "value": "Butler",
       "isRandom": true,
       "isCustom": false,
       "linkNext": false,
       "color": "hsl(241, 37%, 70%)",
       "darkColor": "hsl(241, 12%, 30%)"
+    },
+    {
+      "id": "shot_1765185359739_cuyu2",
+      "type": "shot",
+      "label": "Shot",
+      "value": "face close-up",
+      "isRandom": false,
+      "isCustom": false,
+      "linkNext": false,
+      "color": "hsl(186, 54%, 73%)",
+      "darkColor": "hsl(186, 29%, 33%)"
     },
     {
       "id": "custom_1765170643041_1765170644962_v5vpm",
@@ -39,7 +61,7 @@
       "id": "expression_1765165839664_x7yrq",
       "type": "expression",
       "label": "Expression",
-      "value": "Serious face",
+      "value": "Horrified face",
       "isRandom": true,
       "isCustom": false,
       "linkNext": true,
@@ -50,7 +72,7 @@
       "id": "eyes_1765165453352_ts1fs",
       "type": "eyes",
       "label": "Eyes",
-      "value": "Looking up",
+      "value": "Half-closed eyes",
       "isRandom": true,
       "isCustom": false,
       "linkNext": false,
@@ -61,7 +83,7 @@
       "id": "color_1765167905252_7fhkg",
       "type": "color",
       "label": "Color",
-      "value": "Red",
+      "value": "Neon color",
       "isRandom": true,
       "isCustom": false,
       "linkNext": true,
@@ -72,7 +94,7 @@
       "id": "material_1765165613221_7l1co",
       "type": "material",
       "label": "Material",
-      "value": "Corduroy",
+      "value": "Vinyl",
       "isRandom": true,
       "isCustom": false,
       "linkNext": true,
@@ -83,18 +105,29 @@
       "id": "Top_1765183772157_vpne8",
       "type": "Top",
       "label": "Top",
-      "value": "Baby tee",
-      "isRandom": false,
+      "value": "Bolero",
+      "isRandom": true,
       "isCustom": false,
       "linkNext": false,
       "color": "hsl(327, 36%, 80%)",
       "darkColor": "hsl(327, 11%, 40%)"
     },
     {
+      "id": "bottom_1765184976468_tf0ci",
+      "type": "bottom",
+      "label": "Bottom",
+      "value": "A-line skirt",
+      "isRandom": true,
+      "isCustom": false,
+      "linkNext": false,
+      "color": "hsl(142, 48%, 84%)",
+      "darkColor": "hsl(142, 23%, 40%)"
+    },
+    {
       "id": "action_1765167977571_7aqm4",
       "type": "action",
       "label": "Action",
-      "value": "Diving",
+      "value": "Vaping",
       "isRandom": true,
       "isCustom": false,
       "linkNext": false,
@@ -116,7 +149,7 @@
       "id": "angle_1765165162558_bjb0a",
       "type": "angle",
       "label": "Angle",
-      "value": "60-degree view",
+      "value": "45-degree view",
       "isRandom": true,
       "isCustom": false,
       "linkNext": false,
@@ -127,7 +160,7 @@
       "id": "object_1765171219373_92rmy",
       "type": "object",
       "label": "Object",
-      "value": "White sheet",
+      "value": "Plastic wrap",
       "isRandom": true,
       "isCustom": false,
       "linkNext": false,
@@ -138,29 +171,18 @@
       "id": "lighting_1765169114035_jv25s",
       "type": "lighting",
       "label": "Lighting",
-      "value": "Ambient light",
-      "isRandom": true,
-      "isCustom": false,
-      "linkNext": true,
-      "color": "hsl(111, 44%, 70%)",
-      "darkColor": "hsl(111, 19%, 30%)"
-    },
-    {
-      "id": "shot_1765165740641_likqn",
-      "type": "shot",
-      "label": "Shot",
-      "value": "Half-body shot",
+      "value": "Low-key lighting",
       "isRandom": true,
       "isCustom": false,
       "linkNext": false,
-      "color": "hsl(354, 40%, 79%)",
-      "darkColor": "hsl(354, 15%, 39%)"
+      "color": "hsl(111, 44%, 70%)",
+      "darkColor": "hsl(111, 19%, 30%)"
     },
     {
       "id": "vibe_1765169140994_pn5cy",
       "type": "vibe",
       "label": "Vibe",
-      "value": "Psychedelic",
+      "value": "Opulent",
       "isRandom": true,
       "isCustom": false,
       "linkNext": true,
@@ -171,7 +193,7 @@
       "id": "bg_1765169134418_2zb67",
       "type": "bg",
       "label": "Background",
-      "value": "Mountain",
+      "value": "Slums",
       "isRandom": true,
       "isCustom": false,
       "linkNext": false,
@@ -829,6 +851,7 @@
       "Close-up",
       "Establishing shot",
       "Extreme wide shot",
+      "face close-up",
       "Full body shot",
       "Half-body shot",
       "Over-the-shoulder shot",
@@ -1299,6 +1322,7 @@
       "Painterly",
       "photography",
       "Photorealistic",
+      "RAW photo",
       "realistic atmosphere",
       "Sharp focus",
       "Stylized render",
@@ -1615,6 +1639,10 @@
     "outfit": [],
     "custom_1765170643041": [
       "dynamic pose"
+    ],
+    "custom_1765185941056": [
+      "boke",
+      "Pan Focusing"
     ]
   },
   "customTypes": [
@@ -1652,6 +1680,11 @@
       "key": "Top",
       "label": "Top",
       "capColor": "hsl(83, 38%, 80%)"
+    },
+    {
+      "key": "custom_1765185941056",
+      "label": "focus",
+      "capColor": "hsl(280, 49%, 79%)"
     }
   ],
   "favorites": [
@@ -1736,17 +1769,6 @@
           "linkNext": true,
           "color": "hsl(318, 37%, 81%)",
           "darkColor": "hsl(318, 12%, 40%)"
-        },
-        {
-          "id": "top_1765167897757_e0ln9",
-          "type": "top",
-          "label": "Top",
-          "value": "Corset",
-          "isRandom": true,
-          "isCustom": false,
-          "linkNext": false,
-          "color": "hsl(261, 41%, 73%)",
-          "darkColor": "hsl(261, 16%, 33%)"
         },
         {
           "id": "action_1765167977571_7aqm4",
@@ -1967,17 +1989,6 @@
           "darkColor": "hsl(318, 12%, 40%)"
         },
         {
-          "id": "top_1765167897757_e0ln9",
-          "type": "top",
-          "label": "Top",
-          "value": "Polo shirt",
-          "isRandom": true,
-          "isCustom": false,
-          "linkNext": false,
-          "color": "hsl(261, 41%, 73%)",
-          "darkColor": "hsl(261, 16%, 33%)"
-        },
-        {
           "id": "action_1765167977571_7aqm4",
           "type": "action",
           "label": "Action",
@@ -2194,17 +2205,6 @@
           "linkNext": true,
           "color": "hsl(318, 37%, 81%)",
           "darkColor": "hsl(318, 12%, 40%)"
-        },
-        {
-          "id": "top_1765167897757_e0ln9",
-          "type": "top",
-          "label": "Top",
-          "value": "Tunic",
-          "isRandom": true,
-          "isCustom": false,
-          "linkNext": false,
-          "color": "hsl(261, 41%, 73%)",
-          "darkColor": "hsl(261, 16%, 33%)"
         },
         {
           "id": "action_1765167977571_7aqm4",
@@ -2425,17 +2425,6 @@
           "darkColor": "hsl(318, 12%, 40%)"
         },
         {
-          "id": "top_1765167897757_e0ln9",
-          "type": "top",
-          "label": "Top",
-          "value": "Corset",
-          "isRandom": true,
-          "isCustom": false,
-          "linkNext": false,
-          "color": "hsl(261, 41%, 73%)",
-          "darkColor": "hsl(261, 16%, 33%)"
-        },
-        {
           "id": "action_1765167977571_7aqm4",
           "type": "action",
           "label": "Action",
@@ -2601,7 +2590,8 @@
     "inner",
     "custom_1765170643041",
     "object",
-    "Top"
+    "Top",
+    "custom_1765185941056"
   ],
   "removedCapsules": []
 }
