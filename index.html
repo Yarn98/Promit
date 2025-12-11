@@ -7,8 +7,7 @@
     <title>Promit</title>
     <link rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%235e9c7e'/%3E%3Ccircle cx='30' cy='30' r='8' fill='white'/%3E%3Ccircle cx='50' cy='50' r='8' fill='white'/%3E%3Ccircle cx='70' cy='70' r='8' fill='white'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="styles.css">
-
+    <link rel="stylesheet" href="css/styles.css?v=20251209_v8">
 </head>
 
 <body>
@@ -16,31 +15,64 @@
         <header class="app-header">
             <div class="branding">
                 <h1 class="app-title">Promit</h1>
-                <span class="app-version">V1.0</span><button class="help-btn" type="button"
-                    aria-label="Help">?</button>
+                <span class="app-version">V1.5</span><button class="help-btn" type="button" aria-label="Help"
+                    data-i18n-aria="helpAria">?</button>
+            </div>
+            <div class="search-container">
+                <select id="searchModeSelect" class="search-mode-select" aria-label="Search Mode">
+                    <option value="name" data-i18n="searchName">Name</option>
+                    <option value="keyword" data-i18n="searchContent">Content</option>
+                </select>
+                <div class="search-divider"></div>
+                <div class="search-input-wrapper">
+                    <input type="text" id="searchInput" class="search-input" autocomplete="off" placeholder="Search..."
+                        data-i18n-placeholder="searchPlaceholder">
+                    <button id="searchClearBtn" class="search-clear" type="button" aria-label="Clear search">×</button>
+                    <svg class="search-icon-img" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
             </div>
             <div class="header-actions">
                 <div class="language-dropdown">
-                    <button class="icon-btn" id="languageBtn" type="button"
-                        aria-expanded="false">🌐</button>
+                    <button class="icon-btn" id="languageBtn" type="button" aria-expanded="false"
+                        aria-label="Change language" data-i18n-aria="languageAria">🌐</button>
                     <div class="language-menu" id="languageMenu"></div>
                 </div>
                 <div class="settings-dropdown">
-                    <button class="icon-btn" id="settingsBtn" type="button"
-                        aria-label="Open settings" aria-expanded="false">⚙️</button>
+                    <button class="icon-btn" id="settingsBtn" type="button" aria-label="Open settings"
+                        aria-expanded="false" data-i18n-aria="settingsAria">⚙️</button>
                     <div class="settings-menu" id="settingsMenu">
-                        <div class="settings-row theme-toggle">
-                            <span id="themeToggleIcon" style="font-size:16px;">🌙</span>
-                            <div class="theme-toggle-switch"></div>
+                        <div class="settings-row theme-row">
+                            <div class="theme-controls-wrapper">
+                                <div class="theme-slot-icon" id="themeSlotIcon" aria-hidden="true">
+                                    <div class="theme-slot-track">
+                                        <div class="theme-icon-slot">☀️</div>
+                                        <div class="theme-icon-slot">🌙</div>
+                                    </div>
+                                </div>
+                                <div class="theme-toggle-switch" id="themeSwitch" role="button"
+                                    aria-label="Toggle Theme"></div>
+                            </div>
+                            <div class="palette-slide-selector" id="paletteSelector">
+                                <button class="palette-arrow left" id="palettePrevBtn" type="button"
+                                    aria-label="Previous Palette">❮</button>
+                                <span class="palette-display" id="paletteDisplay" data-i18n="paletteMono">Mono</span>
+                                <button class="palette-arrow right" id="paletteNextBtn" type="button"
+                                    aria-label="Next Palette">❯</button>
+                            </div>
                         </div>
                         <div class="settings-divider"></div>
                         <button type="button" data-setting="export">💾
-                            <span class="settings-label">Save File</span></button>
+                            <span class="settings-label" data-i18n="settingsSave">Save File</span></button>
                         <button type="button" data-setting="import">📂
-                            <span class="settings-label">Open File</span></button>
+                            <span class="settings-label" data-i18n="settingsOpen">Open File</span></button>
                         <div class="settings-divider"></div>
-                        <button type="button" data-setting="reset">↺ <span
-                                class="settings-label">Reset app</span></button>
+                        <button type="button" data-setting="reset">↺ <span class="settings-label"
+                                data-i18n="settingsReset">Reset
+                                app</span></button>
                         <div class="settings-divider"></div>
                         <a class="settings-link" href="https://github.com/banimayo/Promit" target="_blank"
                             rel="noopener noreferrer">
@@ -55,50 +87,67 @@
                 </div>
             </div>
         </header>
-
         <div class="capsule-area" id="capsuleContainer"></div>
-
         <div class="editor-area">
             <div class="editor-card" id="editorContainer">
                 <div class="editor-header">
-                    <div class="active-fav-wrapper">
-                        <div id="activeFavoriteLabel" class="active-fav-label" tabindex="0" role="button"></div>
+                    <div class="header-left active-fav-wrapper">
+                        <div id="activeFavoriteLabel" class="active-fav-label" tabindex="0" role="button">
+                        </div>
                         <button type="button" class="active-fav-edit-btn" id="activeFavEditBtn"
                             aria-label="Edit favorite" title="Edit favorite">
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.586 4.414a2 2 0 012.828 0l1.172 1.172a2 2 0 010 2.828L10 17l-3.9.26.26-3.9 8.226-8.226z"
+                                <path
+                                    d="M14.586 4.414a2 2 0 012.828 0l1.172 1.172a2 2 0 010 2.828L10 17l-3.9.26.26-3.9 8.226-8.226z"
                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" />
                                 <path d="M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                             </svg>
                         </button>
                     </div>
-                    <button class="btn-fav btn-fav-top" type="button"
-                        aria-label="Add to Favorites"><svg fill="currentColor" viewBox="-1 0 19 19"
-                            xmlns="http://www.w3.org/2000/svg" style="width: 24px; height: 24px;">
-                            <path
-                                d="m12.673 10.779.798 4.02c.221 1.11-.407 1.566-1.395 1.013L8.5 13.81l-3.576 2.002c-.988.553-1.616.097-1.395-1.013l.397-2.001.401-2.02-1.51-1.397-1.498-1.385c-.832-.769-.592-1.507.532-1.64l2.026-.24 2.044-.242 1.717-3.722c.474-1.028 1.25-1.028 1.724 0l1.717 3.722 2.044.242 2.026.24c1.124.133 1.364.871.533 1.64L14.184 9.38z">
-                            </path>
-                        </svg></button>
+                    <div class="header-right">
+                        <div class="header-controls">
+                            <button class="btn-toggle-icons" id="btnToggleIcons" type="button" aria-label="Toggle Icons"
+                                title="Toggle Icons">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                                    height="20">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                            <button class="btn-fav btn-fav-top" id="btnAddFav" type="button"
+                                aria-label="Add to Favorites" data-i18n-aria="btnFavAria"><svg fill="currentColor"
+                                    viewBox="-1 0 19 19" xmlns="http://www.w3.org/2000/svg"
+                                    style="width: 24px; height: 24px;">
+                                    <path
+                                        d="m12.673 10.779.798 4.02c.221 1.11-.407 1.566-1.395 1.013L8.5 13.81l-3.576 2.002c-.988.553-1.616.097-1.395-1.013l.397-2.001.401-2.02-1.51-1.397-1.498-1.385c-.832-.769-.592-1.507.532-1.64l2.026-.24 2.044-.242 1.717-3.722c.474-1.028 1.25-1.028 1.724 0l1.717 3.722 2.044.242 2.026.24c1.124.133 1.364.871.533 1.64L14.184 9.38z">
+                                    </path>
+                                </svg></button>
+                        </div>
+                    </div>
                 </div>
                 <div id="chipContainer" class="chip-container"></div>
                 <div id="popover" class="popover"></div>
                 <div class="footer">
                     <div class="nav-row">
-                        <div class="chip-trash" id="chipTrashArea" role="button"><span
-                                class="trash-icon">🗑</span></div>
+                        <div class="chip-trash" id="chipTrashArea" role="button" aria-label="Delete Zone"
+                            data-i18n-aria="chipTrashHint"><span class="trash-icon">🗑</span>
+                        </div>
                         <div class="nav-controls">
-                            <button class="nav-arrow left" type="button" id="btnPrev"
-                                aria-label="Previous History">❮</button>
-                            <button class="btn btn-gen" aria-label="Roll & Generate">
-                                <span class="dice-icon">🎲</span>
-                            </button>
-                            <button class="nav-arrow right" type="button" id="btnNext"
-                                aria-label="Next History">❯</button>
+                            <div class="generate-group">
+                                <button class="gen-arrow left" type="button" id="btnPrev" aria-label="Previous History"
+                                    data-i18n-aria="btnPrevAria">❮</button>
+                                <button class="btn btn-gen" aria-label="Roll & Generate"
+                                    data-i18n-aria="btnGenerateAria">
+                                    <span class="dice-icon">🎲</span>
+                                </button>
+                                <button class="gen-arrow right" type="button" id="btnNext" aria-label="Next History"
+                                    data-i18n-aria="btnNextAria">❯</button>
+                            </div>
                         </div>
                         <div class="copy-controls">
-                            <button class="btn-auto-copy" type="button"
-                                aria-pressed="false">
+                            <button class="btn-auto-copy" type="button" aria-pressed="false"
+                                aria-label="Toggle Auto Copy" data-i18n-aria="btnAutoCopyAria">
                                 <span class="auto-badge">AUTO</span>
                                 <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">
                                     <g stroke-width="0"></g>
@@ -110,8 +159,8 @@
                                     </g>
                                 </svg>
                             </button>
-                            <button class="btn btn-copy" type="button"
-                                aria-label="Copy Prompt">
+                            <button class="btn btn-copy" type="button" aria-label="Copy Prompt"
+                                data-i18n-aria="btnCopyAria">
                                 <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     style="width: 20px; height: 20px;">
                                     <g stroke-width="0"></g>
@@ -128,14 +177,13 @@
                 </div>
             </div>
         </div>
-
         <div class="dock-section" id="dockSection">
             <div class="dock-tabs">
                 <button class="dock-tab active" type="button" data-tab="favorites"><span class="dock-tab-label"
-                        data-tab-label="favorites">⭐ Favorites</span> <span id="favCount"
+                        data-tab-label="favorites" data-i18n="favoritesTab">⭐ Favorites</span> <span id="favCount"
                         style="font-size:12px; color:var(--text-sub); font-weight:600;">(0)</span></button>
                 <button class="dock-tab" type="button" data-tab="history"><span class="dock-tab-label"
-                        data-tab-label="history">⏱ History</span>
+                        data-tab-label="history" data-i18n="historyTab">⏱ History</span>
                     <span id="historyCount"
                         style="font-size:12px; color:var(--text-sub); font-weight:600;">(0)</span></button>
                 <div class="dock-actions">
@@ -145,7 +193,7 @@
             </div>
             <div class="dock-list" id="dockList"></div>
         </div>
-        <div id="toast" class="toast-popup"></div>
+        <div id="toast-container"></div>
     </div>
     <div class="help-modal-overlay" id="helpModal">
         <div class="help-modal">
@@ -154,7 +202,27 @@
             <div class="help-content" id="helpContent"></div>
         </div>
     </div>
-    
-<script src="app.js"></script>
+    <script src="js/config/constants.js?v=20251208"></script>
+    <script src="js/locales/en.js?v=20251208"></script>
+    <script src="js/locales/ko.js?v=20251208"></script>
+    <script src="js/locales/ja.js?v=20251208"></script>
+    <script src="js/locales/zh.js?v=20251208"></script>
+    <script src="js/utils/colors.js?v=20251208"></script>
+    <script src="js/utils/common.js?v=20251208"></script>
+    <script src="js/utils/animator.js?v=20251208"></script>
+    <script src="js/utils/dragGhost.js?v=20251208"></script>
+    <script src="js/utils/gap_manager.js?v=20251208"></script>
+    <script src="js/core/StateManager.js?v=20251208"></script>
+    <script src="js/components/CapsuleBar/index.js?v=20251208"></script>
+    <script src="js/components/ChipEditor/index.js?v=20251208"></script>
+    <script src="js/components/Dock/index.js?v=20251208"></script>
+    <script src="js/components/Popover/index.js?v=20251208"></script>
+    <script src="js/components/Settings/index.js?v=20251208"></script>
+    <script src="js/components/FavoriteControl/index.js?v=20251208"></script>
+    <script src="js/components/Search/index.js?v=20251208"></script>
+    <script src="js/components/Modal/index.js?v=20251208"></script>
+    <script src="js/components/Toast/index.js?v=20251209_v2"></script>
+    <script src="js/core/App.js?v=20251208"></script>
 </body>
+
 </html>

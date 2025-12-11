@@ -1,0 +1,269 @@
+.capsule-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    column-gap: 0;
+    row-gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 8px;
+}
+.cap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    margin: 0 -4px;
+    background: var(--cap-bg, var(--item-bg));
+    border: 1px solid transparent;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: normal;
+    font-family: inherit;
+    color: var(--text-main);
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-height: 34px;
+    padding-left: 18px;
+    padding-right: 18px;
+}
+.cap:active {
+    transform: scale(0.96);
+}
+.cap.active {
+    border-color: transparent;
+    color: var(--text-main);
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.cap.dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+}
+.cap:hover:not(.dragging) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-shadow: 0 0 1px currentColor;
+}
+.cap.cap-editing {
+    transform: none !important;
+    box-shadow: inset 0 0 0 2px var(--highlight);
+    cursor: pointer;
+}
+.cap.linked-left {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: 0;
+}
+.cap.linked-right {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-right: 0;
+}
+.cap-bridge {
+    width: 8px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    overflow: visible !important;
+}
+.cap-bridge.active {
+    width: 8px;
+    margin: 0 -4px;
+    cursor: pointer;
+}
+.cap-add {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    font-size: 18px;
+    border-style: dashed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    color: var(--text-main);
+    margin-left: 12px;
+}
+[data-theme="dark"] .cap-add {
+    color: #fff;
+}
+.cap-edit-dialog {
+    position: absolute;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    width: 220px;
+    z-index: 400;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.cap-edit-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+.cap-edit-title span {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-sub);
+    white-space: nowrap;
+}
+.cap-edit-input {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 13px;
+    background: var(--bg-color);
+    color: var(--text-main);
+}
+.cap-edit-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+.cap-edit-actions button {
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
+.cap-edit-actions .btn-confirm {
+    background: var(--highlight);
+    color: var(--highlight-text);
+    transition: background 0.2s ease, color 0.2s ease;
+}
+.cap-edit-actions .btn-confirm.is-danger {
+    background: var(--danger);
+    color: #fff;
+}
+.cap-edit-actions .btn-cancel {
+    background: var(--surface-hover);
+    color: var(--text-main);
+}
+.editor-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+}
+.nav-arrow {
+    background: none;
+    border: none;
+    padding: 0 14px;
+    color: var(--arrow-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s ease;
+}
+.nav-arrow:hover {
+    color: var(--arrow-hover);
+}
+.nav-arrow:active {
+    color: var(--text-main);
+}
+.nav-arrow.disabled {
+    opacity: 0.15;
+    pointer-events: none;
+}
+.editor-card {
+    width: 100%;
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 24px;
+    min-height: 320px;
+    height: auto;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: none;
+    transition: background 0.3s ease, border 0.3s ease, height 0.15s ease-in-out, min-height 0.15s ease-in-out;
+}
+.editor-header {
+    position: absolute;
+    top: 18px;
+    left: 24px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    z-index: 5;
+}
+.cap-drop-zone {
+    width: 18px;
+    height: 34px;
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.18s ease;
+    flex: 0 0 18px;
+}
+.cap-drop-zone.head {
+    margin-left: -18px;
+}
+.cap-drop-zone.tail {
+    margin-right: -18px;
+}
+.cap.shift-left {
+    transform: translateX(-10px) !important;
+}
+.cap.shift-right {
+    transform: translateX(10px) !important;
+}
+.cap-bridge.active:hover {
+    position: relative;
+    z-index: 200;
+}
+.cap-drop-zone.drag-over-gap::before {
+    background: transparent !important;
+    box-shadow: none !important;
+    opacity: 0 !important;
+    border: none !important;
+}
+.cap-drop-zone.drag-over-gap::after {
+    content: '' !important;
+    display: block !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 28px;
+    background-color: var(--highlight) !important;
+    border-radius: 4px;
+    z-index: 100;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
+    opacity: 1 !important;
+    pointer-events: none;
+    animation: none;
+}
+.cap-bridge:hover::before,
+.cap-drop-zone:hover::before {
+    content: '' !important;
+    display: none !important;
+}

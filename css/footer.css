@@ -1,0 +1,144 @@
+.footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid var(--border);
+    padding: 20px 10px 0 10px;
+}
+.nav-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+}
+.chip-trash {
+    height: 46px;
+    min-width: 64px;
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    font-size: 24px;
+    padding: 0 14px;
+    transition: border 0.2s ease, color 0.2s ease, background 0.2s ease;
+    cursor: default;
+}
+.chip-trash .trash-icon {
+    font-size: 24px;
+}
+.chip-trash.drag-over {
+    border-color: var(--danger);
+    color: var(--danger);
+    background: rgba(255, 59, 48, 0.08);
+}
+@media (min-width: 768px) {
+    .chip-trash {
+        min-width: 90px;
+        padding: 0 20px;
+    }
+}
+.nav-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    justify-self: center;
+}
+.btn {
+    padding: 0 16px;
+    height: 46px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+.btn:active {
+    transform: scale(0.97);
+}
+.btn-copy {
+    flex: 0 0 52px;
+    background: transparent;
+    color: var(--text-main);
+    font-size: 24px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+.btn-copy:hover {
+    transform: scale(1.05);
+    background: transparent;
+}
+.copy-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+.btn-auto-copy {
+    border: none;
+    background: transparent;
+    color: var(--text-sub);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.btn-auto-copy .auto-badge {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+.btn-auto-copy svg {
+    width: 18px;
+    height: 18px;
+}
+.btn-auto-copy.is-active {
+    color: var(--highlight);
+}
+.btn-fav {
+    background: transparent;
+    color: var(--text-sub);
+    font-size: 28px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, transform 0.2s ease;
+    padding: 0;
+}
+.btn-fav.is-active {
+    color: #ffd500;
+}
+.btn-fav-top {
+    width: 32px;
+    height: 32px;
+    pointer-events: auto;
+}
+.btn-fav:hover {
+    transform: scale(1.08);
+    background: transparent;
+    filter: drop-shadow(0 0 10px rgba(255, 213, 0, 0.35));
+}
+.btn-fav.is-active svg {
+    fill: #ffd500;
+}
+.btn-fav-top {
+    flex-shrink: 0;
+    margin-left: auto;
+}

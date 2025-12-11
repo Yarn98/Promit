@@ -1,0 +1,138 @@
+* {
+    box-sizing: border-box;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+input,
+textarea,
+[contenteditable] {
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+img,
+svg {
+    -webkit-user-drag: none;
+    user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.icon-btn,
+.nav-arrow,
+.dock-tab,
+.btn-gen,
+.btn-auto-copy,
+.trash-icon,
+.app-title {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.inline-editing {
+    cursor: text !important;
+}
+
+.inline-input {
+    all: unset;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+    outline: none;
+    text-align: center;
+    min-width: 20px;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    text-decoration: underline;
+    text-decoration-color: var(--highlight);
+    text-underline-offset: 4px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body:not(.app-has-data) #btnToggleIcons,
+body:not(.app-has-data) #btnAddFav {
+    display: none !important;
+}
+
+.app-shell {
+    width: 100%;
+    max-width: 680px;
+    min-height: 100vh;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: visible;
+}
+
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 0;
+    margin-bottom: 4px;
+}
+
+.branding {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.app-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.app-version {
+    font-size: 10px;
+    font-weight: 700;
+    background: var(--highlight);
+    color: var(--highlight-text);
+    padding: 3px 6px;
+    border-radius: 6px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+    z-index: 1;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}

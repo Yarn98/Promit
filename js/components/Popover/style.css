@@ -1,0 +1,129 @@
+.popover {
+    position: absolute;
+    background: var(--popover-bg);
+    border: 1px solid var(--popover-border);
+    border-radius: 16px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    padding: 8px;
+    z-index: 1000;
+    display: none;
+    min-width: 260px;
+    max-width: 340px;
+    max-height: 400px;
+    overflow-y: auto;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    flex-direction: column;
+    animation: popoverFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: top center;
+}
+
+.popover.active {
+    display: flex;
+}
+
+@keyframes popoverFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.pop-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pop-item {
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    background: transparent;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+    font-size: 14px;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    min-height: 40px;
+}
+
+.pop-item:hover {
+    background-color: var(--surface-hover);
+}
+
+.pop-item:active {
+    transform: scale(0.98);
+}
+
+.pop-item.selected {
+    background-color: rgba(52, 152, 219, 0.15);
+    color: var(--highlight);
+    font-weight: 600;
+}
+
+.pop-section-label {
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-sub);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+    margin-bottom: 2px;
+}
+
+.pop-item.random-opt {
+    color: #9b59b6;
+    font-weight: 600;
+}
+
+.pop-edit-btn {
+    border: none;
+    background: transparent;
+    color: var(--text-sub);
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.4;
+    transition: opacity 0.2s, background 0.2s;
+}
+
+.pop-item:hover .pop-edit-btn {
+    opacity: 0.8;
+}
+
+.pop-edit-btn:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--highlight);
+}
+
+.popover::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.popover::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 3px;
+}
+
+.popover::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 3px;
+}
+
+.popover::-webkit-scrollbar-thumb:hover {
+    background: var(--text-sub);
+}
