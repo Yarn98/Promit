@@ -73,6 +73,13 @@ python -m http.server 8080
 # Then open http://localhost:8080/index.html
 ```
 
+or just visit my github io page.
+
+```bash
+https://banimayo.github.io/Promit/
+
+```
+
 ## 📜 License
 
 MIT License. Free to use and modify.
