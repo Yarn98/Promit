@@ -101,7 +101,25 @@ class StateManager {
         this.pushHistory();
     }
     async loadDefaultData() {
-        console.log('Default initialization (Empty state).');
+        console.log('Loading default data from example_pack.json...');
+        try {
+            const response = await fetch('example_pack.json');
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            const data = await response.json();
+            if (data.schemaVersion === 2) {
+                this.capsules = Array.isArray(data.capsules) ? data.capsules : [];
+                this.items = Array.isArray(data.items) ? data.items : [];
+                this.favorites = Array.isArray(data.favorites) ? data.favorites : [];
+                this.rollHistory = Array.isArray(data.rollHistory) ? data.rollHistory : [];
+                console.log('Default data loaded successfully.');
+            } else {
+                console.warn('Incompatible schema version in default data.');
+            }
+        } catch (e) {
+            console.warn('Failed to load default data:', e);
+        }
     }
     applyImportedData(data, silent = false, skipDirtyCheck = false) {
         if (!data) return;
